@@ -1,11 +1,12 @@
-FROM gcc:latest
+FROM node:22-alpine
 
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
+RUN npm install --omit=dev
 
-RUN g++ -std=c++17 Talk-Server-Linux-Plain.cpp -pthread -o talkserver
+COPY . .
 
 EXPOSE 8888
 
-CMD ["./talkserver"]
+CMD ["npm", "start"]
